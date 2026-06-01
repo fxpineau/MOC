@@ -89,12 +89,11 @@ This document defines version 2.1 of the Multi-Order Coverage map (MOC) method,
 which enables the specification of arbitrary coverages across sky regions,
 time intervals and frequency domains.
 
-The goal is to be able to
-provide a very fast comparison mechanism between coverages. The
-mechanism relies on discretizing the unit sphere and one-dimensional quantities
-such as time or frequency.
+The goal is to be able to provide a very fast comparison mechanism between
+coverages. The mechanism relies on discretizing the unit sphere and
+one-dimensional quantities such as time or frequency.
 Specifically, the discretization uses the Z-order curve for 2-dimensional sky
-regions and on hierarchical dyadic subdivisions for 1-dimensional quantities.
+regions and hierarchical dyadic subdivisions for 1-dimensional quantities.
 The system is based on the definition of a specific storage
 of the map coverage using predefined cells hierarchically grouped
 which makes it easy to produce and use for exploring astronomical
@@ -149,7 +148,7 @@ Figure~\ref{fig:ivoadiagram} illustrates the role MOC 2.1
 plays within the IVOA architecture \citep{2021ivoa.spec.1101D}.
 
 The encoding method described in this document allows one to define
-and manipulate space, time and frequency coverage in such a way that basic
+and manipulate space, time and frequency coverages in such a way that basic
 operations like union, intersection or equality test can be performed
 very efficiently. This methodology allows VO applications and
 data servers to build efficient
@@ -189,7 +188,7 @@ version 2.0, and finally supplemented with frequency quantities in version
 
 It was possible to answer those questions with MOC 1.0 standard and
 other VO tools but the amount of manipulation and computation was
-quite a big hurdle for the researchers. With MOC 2.0 it is possible
+quite a big hurdle for the researchers. With MOC 2.0 and 2.1 it is possible
 to answer these questions in a few milli-seconds. Another example
 of usage would be the visual inspection of the spatio-temporal
 coverage of PanSTARRS observations (see Figure~\ref{fig:panstarrs}).
@@ -461,10 +460,8 @@ HEALPix cell borders, a SMOC is generally an upper-approximation of
 the data set coverage. The quality of this approximation depends
 directly on the chosen SMOC resolution (MOCORD\_S).
 Table~\ref{table:orders} provides the HEALPix cell angular resolution for
-each HEALPix order.
-
-In Figure~\ref{fig:smoc-view} we show the MOC creation, from images to their coverage,
-and indicating their corresponding HEALPix numbers.
+each HEALPix order, while Figure~\ref{fig:smoc-view} shows a MOC creation,
+from images to their coverage, with their corresponding HEALPix numbers.
 
 \begin{figure}[h]
 \begin{center}
@@ -505,7 +502,7 @@ i.e. a little bit more than 73000 years at
 1$\mu$s resolution, enough for most astronomical time events. At the
 deepest order (61) the TMOC cell number is the number of $\mu$s since
 JD=0.
-Hence, ab integer time value $t$ in $\mu$s since JD=0 is valid if
+Hence, an integer time value $t$ in $\mu$s since JD=0 is valid if
 $t \in [0, 2^{62}[$. For a given $order$, its cell $index$ is:
 \begin{equation}
   index = \frac{t}{2^{order}}
@@ -523,6 +520,8 @@ We note that two consecutive cells at order N with the indices
 (M$\times$2)+1, (M$\times$2) will be coded at order N-1 with the index
 M and thus recursively. The order N-1 cell duration is 2 times more
 than the N cell duration (61: 1 $\mu$s, 60: 2 $\mu$s, 59: 4 $\mu$s, etc...).
+See Table~\ref{table:tmocorders} for the list of time resolutions
+of TMOC cells.
 
 The time is a relative observation, and depends on the position of the
 observer. There are many time scales for measuring time:
@@ -531,17 +530,9 @@ Coordinate Time (TCG), Ephemeris Time (ET), Barycentric Dynamic Time
 (TDB), International Atomic Time (AI), etc. We opt for the TCB
 reference (see \cite{2015A&A...574A..36R} for details).
 
-TMOC {\bf must} be based on the time scale TCB (see section~\ref{sec:tcb})
+Thus, TMOC {\bf must} be based on the time scale TCB (see section~\ref{sec:tcb})
 and the Solar System Barycenter as the reference position
 \citep[see also][]{2019ASPC..523..497F} and section~\ref{sec:tmoc1}.
-
-It may be necessary to convert the temporal events to the
-chosen scale. If the ephemeris required for this conversion are
-not available, opt to degrade the accuracy of the time measurement
-(typically around 20 minutes for observations within the Earth orbit
-environment to cover all possible observer positions).
-Table~\ref{table:tmocorders} shows the time resolutions of the cells
-for each possible order.
 
 In Figure~\ref{fig:tmoc-view} we show the creation of TMOC, from a time
 series to the list of numbers based on time discretization.
@@ -567,7 +558,8 @@ rather than a constant absolute resolution.
 
 The adopted\footnote{To handle floating-point quantities, two approaches have been proposed.
 The first implemented solution is described in Appendix~\ref{sec:apx:fmoc1}.
-It was later replaced by the more WCS-compliant solution presented above.} approach is fully generic.
+It was later replaced by the more WCS-compliant solution presented in the core of the document.}
+approach is fully generic.
 First, we define the global valid frequency range $[f_{min}, f_{max}[$.
 The frequency $f$ {\bf must} be expressed in $Hz$.
 Next, we introduce a bijective mapping
@@ -659,13 +651,6 @@ We can also express, for a given order $order$ the relative size of cell using $
 \end{equation}
 
 \input{tablef.tex}
-
-Unlike time, the finest resolution is not constant across the full frequency range.
-Because frequencies are represented using 64-bit floating-point values,
-the achievable precision is \textit{relative} rather than \textit{absolute}.
-At the highest resolution (order 51), the relative precision is approximately $10^{-15}$,
-which is close to the number of significant decimal digits provided by double-precision
-floating-point numbers.
 
 Like for time, two consecutive cells at order $N$, with indices
 $(M\times 2)$ and $(M\times 2)+1$, are represented at order $N-1$
