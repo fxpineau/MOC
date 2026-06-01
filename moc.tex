@@ -42,24 +42,17 @@
 \customcss{custom.css}
 
 \newcommand\ada[1]{\textcolor{red}{\textbf{#1}}}
-\newcommand\daniel[1]{\textcolor{blue}{\textbf{#1}}}  
-\newcommand\pierre[1]{\textcolor{orange}{\textbf{#1}}} 
-
+\newcommand\daniel[1]{\textcolor{blue}{\textbf{#1}}}
+\newcommand\pierre[1]{\textcolor{orange}{\textbf{#1}}}
 \newcommand\fxp[1]{\textcolor{teal}{\textbf{#1}}}
-%\newcommand\add[1]{\fxp{#1}}
-% Switch the comment between the following lines to see/hide previous versions of the text
-%\newcommand\remove[1]{\xout{#1}}
-%\newcommand\replace[2]{\remove{#1} \add{#2}}
-\newcommand\add[1]{#1}
-\newcommand\remove[1]{}
-\newcommand\replace[2]{\add{#2}}
+%% Switch the comment between the following lines to see/hide previous versions of the text
+%%\newcommand\add[1]{\fxp{#1}}
+%%\newcommand\remove[1]{\xout{#1}}
+%%\newcommand\replace[2]{\remove{#1} \add{#2}}
+%\newcommand\add[1]{#1}
+%\newcommand\remove[1]{}
+%\newcommand\replace[2]{\add{#2}}
 
-%\newcommand\addb[1]{\textcolor{purple}{\textbf{#1}}}
-%\newcommand\removeb[1]{\textcolor{purple}{\xout{#1}}}
-%\newcommand\replaceb[2]{\removeb{#1} \addb{#2}}
-\newcommand\addb[1]{#1}
-\newcommand\removeb[1]{}
-\newcommand\replaceb[2]{\addb{#2}}
 
 \title{MOC: Multi-Order Coverage map}
 
@@ -74,13 +67,13 @@
 \author{Baptiste Cecconi (LESIA, Observatoire de Meudon)}
 \author{Giuseppe Greco (EGO-Virgo)}
 \author{Tom Donaldson (STScI/NASA)}
-\author{\addb{Thomas Robitaille}}
+\author{Thomas Robitaille}
 \author{Mark Taylor (University of Bristol)}
 \author{Wil O'Mullane (Vera C. Rubin Observatory)}
 \author{Martin Reinecke (Max Planck)}
 \author{S\'{e}bastien Derri\`{e}re (CDS)}
 
-\editor{\add{Francois-Xavier Pineau}}
+\editor{Francois-Xavier Pineau}
 \editor{Pierre Fernique}
 \editor{Ada Nebot}
 \editor{Daniel Durand}
@@ -92,26 +85,26 @@
 \begin{document}
 
 \begin{abstract}
-This document \replace{describes}{defines version 2.1 of} the Multi-Order Coverage map \add{(MOC)} method \remove{(MOC)}
-\remove{version 2.0} \replace{to specify}{, which enables the specification of} arbitrary coverages \replace{for}{across} sky regions
-\replace{and/or time coverages and potentially other dimensions}{, time intervals and frequency domains}.
+This document defines version 2.1 of the Multi-Order Coverage map (MOC) method,
+which enables the specification of arbitrary coverages across sky regions,
+time intervals and frequency domains.
 
 The goal is to be able to
 provide a very fast comparison mechanism between coverages. The
-mechanism \replace{is based}{relies} on \replace{a discretization of}{discretizing} \replace{space}{the unit sphere} and \replace{time
-dimensions}{one-dimensional quantities such as time or frequency}.
-\add{Specifically, the discretization uses the Z-order curve for 2-dimensional sky regions and on hierarchical dyadic subdivisions for 1-dimensional quantities.}
+mechanism relies on discretizing the unit sphere and one-dimensional quantities
+such as time or frequency.
+Specifically, the discretization uses the Z-order curve for 2-dimensional sky
+regions and on hierarchical dyadic subdivisions for 1-dimensional quantities.
 The system is based on the definition of a specific storage
 of the map coverage using predefined cells hierarchically grouped
 which makes it easy to produce and use for exploring astronomical
-collections. \remove{There are already a few applications and libraries which
-are taking advantage of this major evolution of the MOC standard.} 
-\add{This version 2.1 extends the use of MOCs to the three physical quantities: 
-space, time, frequency, as well as their pairwise combinations.}
+collections.
+This version 2.1 extends the use of MOCs to the three physical quantities:
+space, time, frequency, as well as their pairwise combinations.
 \end{abstract}
 
 \listoffigures
-\listoftables  
+\listoftables 
 %\todototoc
 %\listoftodos[Issues which need attention]
 
@@ -145,25 +138,22 @@ develop standards and infrastructure that enable VO applications.
 \end{figure}
 
 \section{Introduction}
-This document is a \replace{major}{minor} release of
-the already existing encoding method recommendation \emph{Multi-Order
-  Coverage} map \citep[MOC~\replace{1.1}{2.0},][]{2022ivoa.spec.0727F}.
-We generalize the MOC
-originally limited to \replace{s}{S}pace \add{, Time, and Space-Time} dimension\add{s}
- (Space MOC, SMOC\add{; Time MOC, TMOC; and Space-Time
-MOC, STMOC}) to \replace{the time
-dimension (Time MOC, TMOC), and space and time dimensions (Space-Time
-MOC, STMOC)}{the Frequency, Space-Frequency and Frequency-Time dimensions
-(Frequency MOC, FMOC; Space-Frequency, SFMOC; Frequency-Time, FTMOC)}.
-Figure~\ref{fig:ivoadiagram} illustrates the role MOC\replace{2.0}{ 2.1}
+This document is a minor release of the already existing encoding method
+recommendation \emph{Multi-Order Coverage} map
+\citep[MOC~2.0,][]{2022ivoa.spec.0727F}.
+We generalize the MOC originally limited to Space, Time, and Space-Time
+dimensions (Space MOC, SMOC; Time MOC, TMOC; and Space-Time MOC, STMOC)
+to the Frequency, Space-Frequency and Frequency-Time dimensions
+(Frequency MOC, FMOC; Space-Frequency, SFMOC; Frequency-Time, FTMOC).
+Figure~\ref{fig:ivoadiagram} illustrates the role MOC 2.1
 plays within the IVOA architecture \citep{2021ivoa.spec.1101D}.
 
 The encoding method described in this document allows one to define
-and manipulate space \replace{and}{,} time \add{and frequency} coverage in such a way that basic
-operations like union, intersection\replace{,}{or} equality test can be performed
+and manipulate space, time and frequency coverage in such a way that basic
+operations like union, intersection or equality test can be performed
 very efficiently. This methodology allows VO applications and
 data servers to build efficient
-procedures to perform such operations on observations and catalogs. 
+procedures to perform such operations on observations and catalogs.
 In the next sections we will describe the different MOCs and their
 encoding standards.
 
@@ -174,12 +164,10 @@ order to provide very fast union, intersection and
 equality operations between them. In order to accomplish this task, we
 based the system on a regular and hierarchical discretization as
 exposed below.
-\replace{The standard MOC1.0 was limited to space, but for a
-multitude of use cases in astronomy we need the notion of time to be
-properly integrated}{The evolution of the MOC standard -- which was initially
-limited to spatial quantities in version 1.0, then expanded to include temporal quantities in version 2.0, 
-and finally supplemented with frequency quantities in version 2.1 
--- enables it to cover a wide range of astronomical use cases}, e.~g.:
+The evolution of the MOC standard -- which was initially limited to spatial
+quantities in version 1.0, then expanded to include temporal quantities in
+version 2.0, and finally supplemented with frequency quantities in version
+2.1 -- enables it to cover a wide range of astronomical use cases, e.~g.:
 \begin{itemize}
 \item What are the space and time coverages of the 2MASS observations
   and are there any observations which are coincidental with the HST
@@ -195,7 +183,8 @@ and finally supplemented with frequency quantities in version 2.1
   by Galex? By both missions simultaneously? If so, are there
   detections within the source catalogues?
 \item Has Neptune been observed by DSS?
-\item \add{Is a radio source contaminating my observations in given frequency ranges?}
+\item Is a radio source contaminating my observations in given frequency
+  ranges?
 \end{itemize}
 
 It was possible to answer those questions with MOC 1.0 standard and
@@ -203,9 +192,9 @@ other VO tools but the amount of manipulation and computation was
 quite a big hurdle for the researchers. With MOC 2.0 it is possible
 to answer these questions in a few milli-seconds. Another example
 of usage would be the visual inspection of the spatio-temporal
-coverage of PanSTARRS observations (see Figure~\ref{fig:panstarrs}). 
+coverage of PanSTARRS observations (see Figure~\ref{fig:panstarrs}).
 The choice of a temporal resolution and a spatial resolution makes it
-possible to obtain a MOC of a desired data volume. 
+possible to obtain a MOC of a desired data volume.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -225,7 +214,7 @@ MOC which can be used in further operations. For instance it is
 possible to compute the intersection of Saturn's ephemeris and
 the spatio-temporal coverage of HST ACS observations, and subsequently,
 query a database for retrieving images for which time and position
-fall within this intersection (see Fig.~\ref{fig:stmoc-saturn}). 
+fall within this intersection (see Fig.~\ref{fig:stmoc-saturn}).
 
 \begin{figure}[h]
 \begin{center}
@@ -260,53 +249,19 @@ and the MOC coverage is generated from the table made up from the pixels.
 Every single level of probability can be used as a regular MOC even in the case in
 which the sky localization is irregularly shaped with disjoint regions.
 This coding technique allows for an extra fast integration in the existing
-Virtual Observatory structures and tools\footnote{\url{https://emfollow.docs.ligo.org/userguide/}}. 
-The 2D contours of a GW sky localization can be visualised 
+Virtual Observatory structures and
+tools\footnote{\url{https://emfollow.docs.ligo.org/userguide/}}.
+The 2D contours of a GW sky localization can be visualised
 and manipulated using Aladin Desktop, allowing one to compare them with
 existing surveys, overlap sky map generations with increasing accuracy
-and computational cost and query the VizieR database. 
+and computational cost and query the VizieR database.
 These sets of tasks can also be performed via Python using the astropy
 affiliated package mocpy\footnote{\url{https://cds-astro.github.io/mocpy/}},
 efficiently displayed in javascript applications
 with Aladin Lite, and integrated within Jupyter notebooks through the
-ipyaladin\footnote{\url{https://cds-astro.github.io/ipyaladin/}} widget\footnote{\url{https://pos.sissa.it/357/031/pdf}}. 
+ipyaladin\footnote{\url{https://cds-astro.github.io/ipyaladin/}}
+widget\footnote{\url{https://pos.sissa.it/357/031/pdf}}.
 
-\remove{Adding temporal information in a space MOC encoding can provide a
-systematic approach in extracting information from follow-up campaigns
-involving tens of ground and space-based observatories in searching
-for gravitational-wave counterparts.
-For illustrative purposes only, a potential use of the time-space MOC
-is provided when a kilo/macronova emission is a credible counterpart of a
-gravitational-wave event. 
-Figure~\ref{fig:gw} shows a mock electromagnetic
-follow-up campaign of a gravitational-wave sky localization over a period
-of time (left panel), a schematic kilonova light-curve and
-temporal coverage of observations (top right panel) and associated
-spatial coverage (bottom right panel). This approach permits us to depict
-the approximate timeline of the instruments involved in the observational
-campaign and place constraints on the emission properties during the
-source evolution.}
-
-%\begin{figure}[!htbp]
-%\begin{center}
-%\includegraphics[width=\textwidth]{kilo.png}
-%\end{center}
-%\caption{A mock electromagnetic follow-up campaign
-%  of a gravitational-wave sky localization over a time period (left).
-%  A schematic kilonova light-curve with the observations temporal
-%  coverage (top right) and associated spatial coverage (bottom right).}
-%\label{fig:gw} 
-%\end{figure} 
-
-%\begin{figure}[!htbp]
-%\begin{center}
-%\includegraphics[width=0.5\textwidth]{kilo1.png}
-%\includegraphics[width=0.45\textwidth]{kilo4.png}
-%\caption{A schematic kilonova light-curve, with the
-%  associated coverage in time (left panel) and space (right panel).}
-%\label{fig:kilonova} 
-%\end{center}
-%\end{figure}
 
 \subsection{Space and Time MOC: Einstein Telescope and Early Warning Alerts}
 The space and time MOC provides us with an effective way to develop new
@@ -319,7 +274,7 @@ expected detection rate of order $10^{5} - 10^{6}$ black holes and $7\times10^4$
 neutron star mergers per year \citep{2020JCAP...03..050M}.
 For fast and real time data access, the user can query by a specific
 time range the gravitational-wave sky localizations encoded as a space
-and time MOC. 
+and time MOC.
 
 In addition, the ET sensitivity at low frequencies enables enough
 signal-to-noise ratio to accumulate before the merger, making possible
@@ -336,32 +291,30 @@ and spatially connected to the inspiral, merger or ring-down phases.
 Early warning alerts are also planned in the LIGO-Virgo-KAGRA O4 run with
 an experimental capability to produce and distribute early warning
 gravitational-wave alerts up to tens of seconds before
-merger\footnote{\url{https://emfollow.docs.ligo.org/userguide/early_warning.html}}.  
+merger\footnote{\url{https://emfollow.docs.ligo.org/userguide/early_warning.html}}.
 
-
-\subsection{\replace{Multi-site positional and temporal search}{Multi-site search in space, time and/or frequency}}
+\subsection{Multi-site search in space, time and/or frequency}
 Often, a typical query from a virtual observatory (VO) user is to
 request all possible records from the VO at a given sky position
-and/or at a given time \add{, and/or at a given frequency}.
-While this is in principle possible by
-dispatching one narrow positional query to every registered Cone
-Search, SSA or SIA service and filtering by time, in practice, the
-number of queries required leads to an unacceptable load on both
-clients and services. Moreover, most of these queries will deliver no
-results since most services often lack coverage in the queried
+and/or at a given time, and/or at a given frequency.
+While this is in principle possible by dispatching one narrow positional
+query to every registered Cone Search, SSA or SIA service and filtering
+by time, in practice, the number of queries required leads to an unacceptable
+load on both clients and services. Moreover, most of these queries will
+deliver no results since most services often lack coverage in the queried
 region. If basic footprint/coverage information was available for all
 registered services, for instance using VODataService 1.2
 \citep{2021ivoa.spec.1102D} only those with coverage in the region
-and time\add{/frequency} of interest would then be queried. This would provide a great
-reduction in the number of services to be queried optimizing the
+and time/frequency of interest would then be queried. This would provide a
+great reduction in the number of services to be queried optimizing the
 response time. Using the MOC offers the opportunity to provide this
 coverage information in a uniform way. The MOC could be stored locally
 for a given service or centrally where the coverage for a number of
 services would be supported.
 
-\subsection{\add{Low frequency radio astronomy}}
+\subsection{Low frequency radio astronomy}
 
-\add{Ground-based low-frequency radio astronomy instruments typically span over
+Ground-based low-frequency radio astronomy instruments typically span over
 a wide spectral range, such as from 10 MHz to 85 MHz, with NenuFAR
 \citep{zarka_2028}, which covers a factor of 8.5 in spectral domain.
 The main beam of the instrument has a field of view that varies by almost one
@@ -374,9 +327,9 @@ The current NenuFAR Python library \citep[nenupy,][]{loh_2025} implements this
 assessment by cross-matching a series of spatial MOCs (for the grating lobes
 and the interfering bright radio sources) with a temporal and spectral sampling.
 Merging the spatial and spectral dimensions into an spatio-frequency MOC
-for a series of observation times would simplify and speed up this task.} 
+for a series of observation times would simplify and speed up this task.
 
-\add{The low-frequency radio sources observed in our solar system,
+The low-frequency radio sources observed in our solar system,
 such as the Sun or the magnetised planets, but also those of active stars
 and some exoplanetary systems, are showing very dynamical structures in the
 temporal-spectral domain, at time scales spanning from milliseconds to hours.
@@ -387,68 +340,48 @@ While this framework proved to be very efficient to store, share, and display
 those features, cross-matching the catalogues is still a difficult process.
 Transforming each of the catalogues into an frequency-time MOC would
 allow very efficient identification of possibly simultaneous events listed
-in different catalogues.}
+in different catalogues.
 
 
 \section{MOC principles}
 
-\add{Irrespective of the quantity,} the MOC standard is defined using four basic building blocks:
-discretization, unique reference system, hierarchization and efficient
-encoding: 
-
+Irrespective of the quantity, the MOC standard is defined using four basic
+building blocks: discretization, unique reference system, hierarchization
+and efficient encoding:
 \begin{enumerate}
 \item Determine a proper tessellation/discretization methodology for
-  each \replaceb{dimension axis}{quantity} (space, time, \add{frequency}, ...);
-\item Fix a unique referential system for each \replaceb{dimension}{quantity}, to avoid 
+  each quantity (space, time, frequency, ...);
+\item Fix a unique referential system for each quantity, to avoid
   reference conversions and thus allowing to easily compare different
-  data collections; 
+  data collections;
 \item Use an hierarchical procedure and a unique representation
-  (canonical form) for compacting and quickly manipulating \removeb{each axis}
-  coverage\addb{s of a given quantity} at any level of accuracy;
+  (canonical form) for compacting and quickly manipulating
+  coverages of a given quantity at any level of accuracy;
 \item Implement at least one serialization in a binary encoding format
-  (other serializations are possible, e.g. ASCII). 
-\end{enumerate} 
+  (other serializations are possible, e.g. ASCII).
+\end{enumerate}
 
 With these principles, a MOC consists of a list of numbers which
-represent the indices of the cells mapping the coverage of the spatial
-\replace{or}{, } temporal \add {or frequency} axis.
+represent the indices of the cells mapping the coverage of the spatial,
+temporal or frequency axis.
 As soon as the consecutive cells are used at order n, they will be
 hierarchically grouped in their parent cell at order n-1, and
 this recursively. This introduces the notion of orders and
 associated cell index boundary alignment implied by the hierarchical structure
-facilitates the combination of cells at different orders. 
-
-\remove{To work efficiently on existing hardware, we encode of any pair
-(order, index) as a long integer (64 bits), and we reserve the two
-most significant bits to encode the type of MOC (spatial, temporal,
-or future usages). 
-The earlier MOC standard was limited to spatial coverage.
-We are reusing these principles to manipulate temporal coverages,
-as well as space-time coverages where we can manipulate the two
-physical dimensions simultaneously.}
-
-
-%To work efficiently on existing hardware, we encode of any pair
-%(order, index) as a \replace{long}{64-bits} integer \rm{(64 bits)}, and we reserve the two
-%most significant bits to encode the type of MOC (spatial, temporal,
-%\add{frequency} or \replace{future usages}{custom}). 
-%The earlier MOC standard was limited to spatial\add{, time, and space-time} coverage\add{s}.
-%We are reusing these principles to manipulate \replace{temporal}{frequency} coverages,
-%as well as \replace{space-time}{space-frequency and frequency-time} coverages where we can manipulate the two
-%physical dimensions simultaneously.
+facilitates the combination of cells at different orders.
 
 \medskip
 \par\noindent
-We will now explain the conventions chosen for \rm{the spatial, temporal and frequency axis}
-\add{single quantity MOCs, namely space, time and frequency MOCs}
-\replaceb{designed}{designated} \add{by the acronyms SMOC, TMOC and FMOC.
+We will now explain the conventions chosen for single quantity MOCs,
+namely space, time and frequency MOCs designated by the acronyms SMOC,
+TMOC and FMOC.
 Then, we also explain the conventions chosen for two-dimensional MOCs,
-namely space-time, space-frequency and frequency-time MOCs}
-\replaceb{designed}{designated} \add{by the acronyms STMOC, SFMOC and FTMOC.}
+namely space-time, space-frequency and frequency-time MOCs
+designated by the acronyms STMOC, SFMOC and FTMOC.
 
-\subsection{\add{Single quantity MOCs}}
+\subsection{Single quantity MOCs}
 
-\add{In this section, we describe the convention relative to single quantity MOCs.}
+In this section, we describe the convention relative to single quantity MOCs.
 
 \subsubsection{Space MOC conventions}
 Defining a sky region by a subset of regular sky tessellation or tiles
@@ -472,13 +405,13 @@ points:
 \item Accuracy: HEALPix provides libraries which allow the calculation
   up to accuracy of 0.4 mas (order 29) (\url{http://sourceforge.net/projects/healpix/});
 \item Standard: Existence of many HEALPix libraries: C++, Java,
-  Fortran, \replace{IDL}{Python, Rust, Web Assembly, }...
+  Fortran, Python, Rust, Web Assembly, ...
   Also, HEALPix was selected for several all sky
-  missions such as WMAP, Planck and Gaia. The HEALPix main web site \replaceb{is}{, previsously}
-  located at Jet Propulsion Lab\addb{oratory}\addb{, is now on sourceforge} (\url{http://healpix.sourceforge.io/}).
+  missions such as WMAP, Planck and Gaia. The HEALPix main web site, previsously
+  located at Jet Propulsion Laboratory, is now on sourceforge (\url{http://healpix.sourceforge.io/}).
 \end{itemize}
 
-The HEALPix \citep{2005ApJ...622..759G} \add{NESTED} tessellation technique divides
+The HEALPix \citep{2005ApJ...622..759G} NESTED tessellation technique divides
 the sphere into 12 cells, each of them sub-divided into 4 cells
 recursively (see Fig.~\ref{fig:healpix}). Thus the sphere at order 1
 will consist of 48 cells,
@@ -493,17 +426,15 @@ at a given order is covering an equal area of the sphere.
 \label{fig:healpix}
 \end{figure}
 
-% MOVED HERE FROM v2.1-v2
-\add{In practice, the sub-division of each base cell -- 
-which are squares in the Euclidean HEALPix projection plane -- consists in 
-iterations of a Z-order curve, and bit interleaving allows for
-a non-recursive algorithm.}
-\addb{When encoding a "NESTED" HEALPix index, the four Most Significant Bits (MSB) are used to code
-the base cell index ($ \in [0, 12[)$ and the remaining LSBs are the 2-dimensional Morton code of the
-coordinates inside the base cell.}
 
-% MOVED HERE FROM v2.1-v2
-\replace{This}{Thus, the "NESTED"} numbering consists of enumerating all cells in a
+In practice, the sub-division of each base cell -- which are squares in the
+Euclidean HEALPix projection plane -- consists in iterations of a Z-order
+curve, and bit interleaving allows for a non-recursive algorithm.
+When encoding a "NESTED" HEALPix index, the four Most Significant Bits (MSB) are used to code
+the base cell index ($ \in [0, 12[)$ and the remaining LSBs are the 2-dimensional Morton code of the
+coordinates inside the base cell.
+
+Thus, the "NESTED" numbering consists of enumerating all cells in a
 specific order. For instance, at order 1, there are 48 cells (12x4)
 enumerated from 0 to 47. In this scheme, the 4 sub-cells of cell M
 have the indices: (M$\times4)+3$, (M$\times4)+1$, (M$\times4)+2$,
@@ -520,16 +451,6 @@ order.
 \caption{HEALPix numbering principle}
 \end{figure}
 
-\remove{HEALPix allows three coordinate systems: galactic, equatorial and
-ecliptic. Allowing various coordinate systems would limit the
-possibility to compare efficiently SMOCs. There is indeed no
-equivalence between an HEALPix cell described in a given coordinate
-system and a cell, or a list of sub-cells expressed in a different
-coordinate system. Consequently, the SMOC definition is expressed in
-equatorial coordinate using the ICRS reference. This choice has been
-motivated by looking at most catalogs and realizing that most of them
-are using equatorial coordinates.}
-
 To support the encoding based on 64-bit longs, the best resolution
 available is provided at order 29 and according to the HEALPix
 equations, corresponds approximately to 0.4mas.  The SMOC resolution
@@ -543,7 +464,7 @@ Table~\ref{table:orders} provides the HEALPix cell angular resolution for
 each HEALPix order.
 
 In Figure~\ref{fig:smoc-view} we show the MOC creation, from images to their coverage,
-and indicating their corresponding HEALPix numbers. 
+and indicating their corresponding HEALPix numbers.
 
 \begin{figure}[h]
 \begin{center}
@@ -557,20 +478,13 @@ and indicating their corresponding HEALPix numbers.
 \input{table1.tex}
 \input{table2.tex}
 
-\replaceb{The mechanism used to determine which HEALPix cell contains a given
-The formula computing a NESTED HEALPix index provided a given $order$
-and}{The formula computing a cell index from a} sky location is described in
+The formula computing a cell index from a sky location is described in
 the main article defining the HEALPix system \citep{2005ApJ...622..759G}.
-\replaceb{Several support libraries supporting the most important set of primitives are
-already available.
-These libraries are required if one wants to generate SMOCs, and also
-wants to compare them with sky coordinates. Though please
-note that these libraries do not have built-in support to performing
-basic SMOC arithmetics.}{Several support libraries implementing the most
+Several support libraries implementing the most
 important primitives are already available. These libraries are required
 for generating SMOCs and for comparing them with sky coordinates.
 However, they do not provide built-in support for performing basic
-SMOC arithmetic operations.}
+SMOC arithmetic operations.
 
 
 
@@ -591,7 +505,7 @@ i.e. a little bit more than 73000 years at
 1$\mu$s resolution, enough for most astronomical time events. At the
 deepest order (61) the TMOC cell number is the number of $\mu$s since
 JD=0.
-\addb{Hence, ab integer time value $t$ in $\mu$s since JD=0 is valid if 
+Hence, ab integer time value $t$ in $\mu$s since JD=0 is valid if
 $t \in [0, 2^{62}[$. For a given $order$, its cell $index$ is:
 \begin{equation}
   index = \frac{t}{2^{order}}
@@ -604,40 +518,34 @@ of a given $index$ of order $order$ is given by
   t_{max} &= (index + 1) \times 2^{order}
   \label{eq:tmoc:t}
 \end{align}.
-}
 
-% MOVED HERE fom v2.1-v2 
-\addb{We note that two consecutive cells at order N with the indices
+We note that two consecutive cells at order N with the indices
 (M$\times$2)+1, (M$\times$2) will be coded at order N-1 with the index
 M and thus recursively. The order N-1 cell duration is 2 times more
-than the N cell duration (61: 1 $\mu$s, 60: 2 $\mu$s, 59: 4 $\mu$s, etc...).}
+than the N cell duration (61: 1 $\mu$s, 60: 2 $\mu$s, 59: 4 $\mu$s, etc...).
 
-\remove{The time is a relative observation, and depends on the position of the
+The time is a relative observation, and depends on the position of the
 observer. There are many time scales for measuring time:
 Terrestrial Time (TT), Barycentric Coordinate Time (TCB), Geocentric
 Coordinate Time (TCG), Ephemeris Time (ET), Barycentric Dynamic Time
 (TDB), International Atomic Time (AI), etc. We opt for the TCB
-reference} (see \cite{2015A&A...574A..36R} for details). 
-\remove{Our choice is motivated by the fact that this system is linear by
-construction and has been adopted by numerous missions such as Gaia.}
+reference (see \cite{2015A&A...574A..36R} for details).
 
-% MOVED HERE fom v2.1-v2 
-TMOC {\bf must} be based on \removeb{JD system,} the time
-scale TCB (see section~\ref{sec:tcb}) and the Solar System Barycenter as the reference
-position \citep[see also][]{2019ASPC..523..497F} and section~\ref{sec:tmoc1}.
-%The best resolution supported by TMOC is $1 \mu$s.
+TMOC {\bf must} be based on the time scale TCB (see section~\ref{sec:tcb})
+and the Solar System Barycenter as the reference position
+\citep[see also][]{2019ASPC..523..497F} and section~\ref{sec:tmoc1}.
 
 It may be necessary to convert the temporal events to the
 chosen scale. If the ephemeris required for this conversion are
 not available, opt to degrade the accuracy of the time measurement
 (typically around 20 minutes for observations within the Earth orbit
 environment to cover all possible observer positions).
-Table~\ref{table:tmocorders}
-\replaceb{is showing some time values at a given order}{shows the time resolutions of the cells for each possible order}.
+Table~\ref{table:tmocorders} shows the time resolutions of the cells
+for each possible order.
 
 In Figure~\ref{fig:tmoc-view} we show the creation of TMOC, from a time
 series to the list of numbers based on time discretization.
-      
+ 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=\textwidth]{tmoc_view.png}
@@ -648,16 +556,16 @@ series to the list of numbers based on time discretization.
 \label{fig:tmoc-view}
 \end{figure}
 
-\subsubsection{\add{Frequency MOC conventions}\label{sec:fmoc1}}
+\subsubsection{Frequency MOC conventions\label{sec:fmoc1}}
 
-\add{As for Time, representing a frequency coverage requires defining \emph{a priori}
+As for Time, representing a frequency coverage requires defining \emph{a priori}
 the total frequency range to be described by the notation. However, unlike Time --
 which is expressed as milliseconds since a reference epoch and therefore has a constant
 absolute resolution (1 millisecond) -- frequency values are represented as floating-point
 numbers with an approximately constant \emph{relative} resolution (i.e. a fixed number of significant digits),
-rather than a constant absolute resolution.}
+rather than a constant absolute resolution.
 
-\add{The adopted\footnote{To handle floating-point quantities, two approaches have been proposed.
+The adopted\footnote{To handle floating-point quantities, two approaches have been proposed.
 The first implemented solution is described in Appendix~\ref{sec:apx:fmoc1}.
 It was later replaced by the more WCS-compliant solution presented above.} approach is fully generic.
 First, we define the global valid frequency range $[f_{min}, f_{max}[$.
@@ -666,195 +574,160 @@ Next, we introduce a bijective mapping
 \[
 g: [f_{min}, f_{max}[ \rightarrow [0,1[
 \]
-such that any frequency $f \in [f_{min}, f_{max}[$ is associated with the dyadic interval containing $g(f)$.}
+such that any frequency $f \in [f_{min}, f_{max}[$ is associated with the dyadic interval containing $g(f)$.
 
-\add{For a given $order$, the interval $[0,1[$ is subdivided into $2^{order+1}$ dyadic intervals (the MOC cells),
+For a given $order$, the interval $[0,1[$ is subdivided into $2^{order+1}$ dyadic intervals (the MOC cells),
 indexed from $0$ to $2^{order+1}-1$.
-The index corresponding to a frequency $f$ at order $order$ is therefore:}
+The index corresponding to a frequency $f$ at order $order$ is therefore:
 
-\add{\begin{equation}
+\begin{equation}
   index = \lfloor g(f) \times 2^{order+1} \rfloor
   \label{eq:fmoc:i}
-\end{equation}}
+\end{equation}
 
-\add{The adopted bounds of the valid frequency range are:
+The adopted bounds of the valid frequency range are:
 \begin{itemize}
   \item $f_{min} = 10^{-18}$ Hz, corresponding approximately to the inverse of the age of the Universe.
   \item $f_{max} = 10^{+38}$ Hz, a somewhat arbitrary upper limit chosen so that the full range spans 56 decades in logarithmic scale.
-\end{itemize}}
+\end{itemize}
 
-\add{The mapping function $g$ is defined as a linear interpolation in logarithmic space:
+The mapping function $g$ is defined as a linear interpolation in logarithmic space:
 \begin{equation}
-  g(f) = \frac{\log_{10}(f) - \log_{10}(f_{min})}{\log_{10}(f_{max}) - \log_{10}(f_{min})} 
-       %= \frac{\ln(f) - \ln(f_{min})}{\ln(f_{max}) - \ln(f_{min})}
+  g(f) = \frac{\log_{10}(f) - \log_{10}(f_{min})}{\log_{10}(f_{max}) - \log_{10}(f_{min})}
   \label{eq:fmoc:g}
-\end{equation}}
+\end{equation}
 
-\add{Combining Eq.~(\ref{eq:fmoc:i}) and Eq.~(\ref{eq:fmoc:g}) with the selected frequency range,
+Combining Eq.~(\ref{eq:fmoc:i}) and Eq.~(\ref{eq:fmoc:g}) with the selected frequency range,
 we obtain, for a given $order$:
 \begin{equation}
-  index = \left\lfloor 
+  index = \left\lfloor
   \frac{\log_{10}(f) + 18}{56} \times 2^{order+1}
   \right\rfloor
-  %= \left\lfloor 
-  %\frac{\ln(f \times 10^{18})}{56 \ln(10)} \times 2^{order+1} 
-  %\right\rfloor
-\end{equation}}
+\end{equation}
 
-\add{The number of consecutive integers that can be exactly represented by an IEEE~754 floating-point
-is limited by the number of bits in the mantissa.
-For double-precision floating-points, this number is 52.}
+The number of consecutive integers that can be exactly represented by an
+IEEE~754 floating-point is limited by the number of bits in the mantissa.
+For double-precision floating-points, this number is 52.
 
-\add{Notably, for a fixed exponent, the fractional part of a floating-point number corresponds to
-a dyadic rational. Consequently, there is no benefit in defining a MOC $order$ with more cells
-than the number of dyadic rationals representable with 52 bits. Beyond this limit, the cells
-would be smaller than the intrinsic precision of double-precision floating-point numbers.}
+Notably, for a fixed exponent, the fractional part of a floating-point number
+corresponds to a dyadic rational. Consequently, there is no benefit in defining
+a MOC $order$ with more cells than the number of dyadic rationals representable
+with 52 bits.
+Beyond this limit, the cells would be smaller than the intrinsic precision of
+double-precision floating-point numbers.
 
-\add{For this reason, the maximum order is limited to 52 levels, ranging from 0 to
+For this reason, the maximum order is limited to 52 levels, ranging from 0 to
 $order_{max} = 51$.
-At the maximum resolution, the index corresponding to a frequency $f$ is therefore computed as:
+At the maximum resolution, the index corresponding to a frequency $f$ is
+therefore computed as:
 \begin{align}
   order_{max} &= 51 \\
-  index_{51}  &= \left\lfloor 
+  index_{51}  &= \left\lfloor
   \frac{\log_{10}(f) + 18}{56} \times 2^{52}
   \right\rfloor
-\end{align}}
- 
-\add{Conversely, the frequency range $[f_{min}, f_{max}[$ corresponding to a given index $index$ at
-a given order $order$ can be obtained using the inverse transformation:
+\end{align}
+
+Conversely, the frequency range $[f_{min}, f_{max}[$ corresponding to a given
+index $index$ at a given order $order$ can be obtained using the inverse
+transformation:
 \begin{eqnarray*}
   f_{min}       & = & g^{-1}(\frac{index}{2^{order + 1}})     = 10^{ 56 \times \frac{index}{2^{order + 1}} - 18} \\
   f_{max}       & = & g^{-1}(\frac{index + 1}{2^{order + 1}}) = 10^{ 56 \times \frac{index + 1}{2^{order + 1}} - 18}	
-\end{eqnarray*}}
+\end{eqnarray*}
 
-\add{Choosing a given order is equivalent to selecting the number of mantissa bits used to represent the mapped value 
-in the interval $\in [0, 1[$.
-In practice, this corresponds to choosing a level of numerical precision, analogous to selecting a 
-number of significant bits (or digits), noting that approximately one decimal digit of precision is
-lost for every 3 to 4 mantissa bits removed.
-The approximate number of significant decimal digits corresponding to a given order can be estimated using
-the following relation:
+Choosing a given order is equivalent to selecting the number of mantissa bits
+used to represent the mapped value in the interval $\in [0, 1[$.
+In practice, this corresponds to choosing a level of numerical precision,
+analogous to selecting a number of significant bits (or digits), noting that
+approximately one decimal digit of precision is lost for every 3 to 4 mantissa
+bits removed.
+The approximate number of significant decimal digits corresponding to a given
+order can be estimated using the following relation:
 \begin{equation}
   n = \frac{(order + 1)}{\log_2(10)}
 \end{equation}
 This expression follows from the conversion between binary and decimal precision,
 since one decimal digit corresponds to approximately $\log_2(10) \approx 3.32$ bits.
-For example, a frequency stored using a 32-bit floating-point number provides about 
+For example, a frequency stored using a 32-bit floating-point number provides about
 24 bits of significand precision, corresponding to approximately 7 decimal digits.
 To obtain a comparable precision in the hierarchical representation, an order of 29 can be chosen.
 Additional values are provided in Table~\ref{table:fmocorders}.
-}
 
-\add{We can also express, for a given order $order$ the relative size of cell using $g^{-1}$:
+We can also express, for a given order $order$ the relative size of cell using $g^{-1}$:
 \begin{equation}
     \frac{\Delta f}{f} = \frac{g^{-1}(\frac{index + 1}{2^{order + 1}}) - g^{-1}(\frac{index}{2^{order + 1}})}{g^{-1}(\frac{index}{2^{order + 1}})} = 10^\frac{56}{2^{order + 1}} - 1
 \end{equation}
-}
 
-\input{tablef.tex} 
+\input{tablef.tex}
 
-\addb{Unlike time, the finest resolution is not constant across the full frequency range.
+Unlike time, the finest resolution is not constant across the full frequency range.
 Because frequencies are represented using 64-bit floating-point values,
 the achievable precision is \textit{relative} rather than \textit{absolute}.
 At the highest resolution (order 51), the relative precision is approximately $10^{-15}$,
 which is close to the number of significant decimal digits provided by double-precision
-floating-point numbers.}
+floating-point numbers.
 
-\addb{Like for time, two consecutive cells at order $N$, with indices
+Like for time, two consecutive cells at order $N$, with indices
 $(M\times 2)$ and $(M\times 2)+1$, are represented at order $N-1$
 by a single cell with index $M$.
-This hierarchical structure applies recursively across all orders.}
+This hierarchical structure applies recursively across all orders.
 
-\addb{Considering the dyadic structure of the intervals, a cell at order
+Considering the dyadic structure of the intervals, a cell at order
 $N-1$ spans twice the frequency range of a cell at order $N$
 Consequently, the frequency resolution at order
-$N-1$ is half that at order $N$.}
+$N-1$ is half that at order $N$.
 
 
-%\paragraph{\add{Remark}}
-%
-%\add{To handle floating-point quantities, two approaches have been proposed.
-%The first implemented solution is described in Appendix~\ref{sec:apx:fmoc1}.
-%It was later replaced by the more WCS-compliant solution presented above.}
+\subsection{Two dimensional MOCs}
 
-\subsection{\add{Two dimensional MOCs}}
-
-\add{In this section, we describe the convention adopted\footnote{The use of
+In this section, we describe the convention adopted\footnote{The use of
 a single index obtained by interleaving the indices of two quantities,
-similarly to a 2D Z-order curve, was considered but ultimately discarded. 
-First, the resolutions of both quantities would have been coupled, making it impossible, for example,
-to describe an observational coverage with low temporal resolution and high spatial resolution.
-Second, encoding two 64-bit indices into a single 64-bit index would have reduced the maximum
-achievable resolution for each quantity.}
-for two-dimensional MOCs,
-i.e. MOCs describing the coverage of two quantities at the same time.}
+similarly to a 2D Z-order curve, was considered but ultimately discarded.
+First, the resolutions of both quantities would have been coupled, making it
+impossible, for example, to describe an observational coverage with low
+temporal resolution and high spatial resolution.
+Second, encoding two 64-bit indices into a single 64-bit index would have
+reduced the maximum achievable resolution for each quantity.}
+for two-dimensional MOCs, i.e. MOCs describing the coverage of two quantities
+at the same time.
 
-\add{To respond to the different use cases presented at the beginning of 
+To respond to the different use cases presented at the beginning of 
 the document, independent single quantity MOCs are not enough.
 We need to link two quantities in a global mechanism.
-For example, we need to be able to select a SMOC using a time or a frequency window.
+For example, we need to be able to select a SMOC using a time or a frequency
+window.
 We also need to select a TMOC or a FMOC using a spatial constraint.
 Implementing this linkage would allow
 the potential users to select and interact with the astronomical
 collections which support space, time and/or frequency and use logical
-operators between them.}
+operators between them.
 
-\add{Our approach combines two quantities -- time and space, frequency and space, or time and frequency --
-by associating sub-MOCs of the first quantity with MOCs of the second quantity.
+Our approach combines two quantities -- time and space, frequency and space,
+or time and frequency -- by associating sub-MOCs of the first quantity with
+MOCs of the second quantity.
 For the first quantity, the range of deepest-order indices bounding a sub-MOC
 must not overlap with the one of another sub-MOC.
 For the second quantity, MOCs are independent and may overlap.
-In the various serializations, a 2D-MOC is represented as a set of tuples,
-each consisting of a sub-MOC of the first quantity and a MOC of the second quantity.
-Although the resolutions of the first and second quantities may differ, the resolution of each quantity remains uniform across the entire 2D-MOC.}
+In the various serializations, a 2D-MOC is represented as a set of tuples, each
+consisting of a sub-MOC of the first quantity and a MOC of the second quantity.
+Although the resolutions of the first and second quantities may differ, 
+the resolution of each quantity remains uniform across the entire 2D-MOC.
 
-\addb{In the remaining of the document we adopt the following convention: 
-a $YX$MOC is a 2D-MOC in which $X$ is the first quantity and $Y$ the second one.}
+In the remaining of the document we adopt the following convention: 
+a $YX$MOC is a 2D-MOC in which $X$ is the first quantity and $Y$ the second one.
 
-%\add{Remark: the use of a single index obtained by interleaving the indices of two quantities,
-%similarly to a 2D Z-order curve, was considered but ultimately discarded.
-%First, the resolutions of both quantities would have been coupled, making it impossible, for example,
-%to describe an observational coverage with low temporal resolution and high spatial resolution.
-%Second, encoding two 64-bit indices into a single 64-bit index would have reduced the maximum
-%achievable resolution for each quantity.}
 
 \subsubsection{Space and Time MOC conventions\label{sec:stmoc}}
 
-\remove{To respond to the different use cases presented at the beginning of
-the document, the SMOC and TMOC independently are not enough. We need
-to link the two dimensions in a global mechanism. In other words, we
-need to be able to select the SMOC using a time window or to select a
-TMOC using a spatial constraint. Implementing this linkage would allow
-the potential users to select and interact with the astronomical
-collections which support space and time and use logical
-operators between them.}
-
-\remove{Our approach is to combine these two dimensions - time and space - by
-associating each time period (coded according to the TMOC
-convention) with its spatial region (coded according to the SMOC
-convention). For that, we interleave the information of time coverage
-with the information of space coverage for this period.}
-
-\remove{This two-dimensional interleaving approach has the advantage of making
-the resolutions chosen for time and for space independent. For
-instance, it is possible to describe observation coverage with a low
-resolution for time while using a high spatial
-resolution.
-A single coding for indexing space and time simultaneously would imply
-at best very low resolution MOCs due to the 64-bit coding constraint. 
-We thus proposed the interleaving algorithm which allows us to define and
-manipulate high resolution STMOCs of reasonable sizes for fast algorithms
-(see Appendix~\ref{app:perf} for STMOC performance).
-}
-
-\add{In Space-Time MOCs (STMOCs), the first quantity is time and the second quantity is space.
-Consecutive time ranges associated with the same spatial coverage
-are grouped into a sub-TMOC linked to their common SMOC.
-The STMOC is represented as a sorted set of (sub-TMOC, SMOC) pairs.}
+In Space-Time MOCs (STMOCs), the first quantity is time and the second
+quantity is space.
+Consecutive time ranges associated with the same spatial coverage are
+grouped into a sub-TMOC linked to their common SMOC.
+The STMOC is represented as a sorted set of (sub-TMOC, SMOC) pairs.
 
 
 In Figure~\ref{fig:stmoc-view} we show the visual representation of an STMOC,
-in which at a given \replace{TMOC range}{sub-TMOC} we obtain the corresponding SMOC. 
+in which at a given sub-TMOC we obtain the corresponding SMOC. 
  
   
 \begin{figure}[h]
@@ -866,153 +739,41 @@ in which at a given \replace{TMOC range}{sub-TMOC} we obtain the corresponding S
 \label{fig:stmoc-view}
 \end{figure}
 
-\subsubsection{\add{Space and Frequency MOC conventions}}
+\subsubsection{Space and Frequency MOC conventions}
 
-\add{In some use cases, it is desirable to combine the spatial and frequency dimensions.
+In some use cases, it is desirable to combine the spatial and frequency dimensions.
 Similarly to STMOCs -- see section~\ref{sec:stmoc} -- SFMOCs allow the selection of a SMOC 
 within a given frequency window -- or more generally, within a FMOC.
 Conversely, they can also be used to derive a FMOC subject to spatial constraints.
 The mechanism is identical to that described in the previous section; 
-the only difference lies in the nature of the quantities involved.}
-\addb{Thus, in Space-Frequency MOCs (SFMOCs), the first quantity is the frequency
-and the second quantity is space.}
-\add{The type of quantity is specified by a prefix in the ASCII representation or 
-by a keyword in the FITS serialization.}
+the only difference lies in the nature of the quantities involved.
+Thus, in Space-Frequency MOCs (SFMOCs), the first quantity is the frequency
+and the second quantity is space.
+The type of quantity is specified by a prefix in the ASCII representation or 
+by a keyword in the FITS serialization.
 
-\subsubsection{\add{Frequency and Time MOC conventions}}
+\subsubsection{Frequency and Time MOC conventions}
 
-\add{FTMOCs are used to combine the frequency and time dimensions.
+FTMOCs are used to combine the frequency and time dimensions.
 They use the same convention as STMOCs and SFMOCs, with the appropriate quantities prefix
-in the ASCII serialization.}
-\addb{Thus, in Frequency-Time MOCs, the first quantity is the time
-and the second quantity is the Frequency.}
+in the ASCII serialization.
+Thus, in Frequency-Time MOCs, the first quantity is the time
+and the second quantity is the Frequency.
 
 
-\section{\replace{SMOC and TMOC encoding}{MOC serializations}}
+\section{MOC serializations}
 
-\removeb{The encoding described in this section guarantees backward compatibility
-with MOCs corresponding to previous versions of this standard.}
-\addb{Two complementary serialization formats are defined for all MOCs:
-a string serialization based on ASCII and a binary format based on FITS.}
+Two complementary serialization formats are defined for all MOCs:
+a string serialization based on ASCII and a binary format based on FITS.
 
-\subsection{\replace{SMOC and TMOC encoding}{MOC serializations for a single quantity}}
+\subsection{MOC serializations for a single quantity}
 
-%\subsection{Space MOC \remove{or SMOC}}
-%
-%\remove{As introduced above, the SMOC {\bf should} be based on the
-%HEALPix tessellation of the sphere, expressed in the ICRS coordinate
-%reference system for celestial coverages. This document does not describe
-%the use of SMOC outside celestial scope. However, it is possible to use
-%SMOC for other coverages, such as planetary coverages. The definition of
-%the unique reference for each body will have to be defined.}
-%\remiveb{Two complementary encoding formats are defined: a string serialization based
-%on ASCII and a binary format based on FITS.}
-
-%\subsubsection{Numbering}
-
-%The numbering scheme used in SMOC for specifying the cell indices {\bf
-%  must} follow the "NESTED" HEALPix numbering schemes
-%\citep{2005ApJ...622..759G}. 
-
-%\add{In a "NESTED" HEALPix index, the four Most Significant Bits (MSB) are used to code the base cell index 
-%($ \in [0, 12[)$ and the remaining LSBs are the 2-dimensional Morton code of the coordinates inside the base cell.
-%Said differently, an HEALPix number comes from the concatenation of 12 Z-order curves, one curve per base cell.}
-
-%\replace{This}{Thus, the "NESTED"} numbering consists of enumerating all cells in a
-%specific order. For instance, at order 1, there are 48 cells (12x4)
-%enumerated from 0 to 47. In this scheme, the 4 sub-cells of cell M
-%have the indices: (M$\times4)+3$, (M$\times4)+1$, (M$\times4)+2$,
-%(M$\times4$) in reading
-%order. And reciprocally, the parent index of cell N is
-%N/4. Each SMOC cell is coded by a pair of numbers:
-%(order, index) which are the HEALPix order and the HEALPix index in this
-%order.
-%
-%\begin{figure}[h]
-%\begin{center}
-%\includegraphics[width=\textwidth]{nested_healpix.jpg}
-%\end{center}
-%\caption{HEALPix numbering principle}
-%\end{figure}
-%
-%{\bf Note:} The order 0 is a special case, it contains only 12
-%cells enumerated from 0 to 11.
-
-
-% \subsubsection{Sky coordinates}
-% The mechanism used to determine which HEALPix cell contains a given
-% sky location is described in the main article defining the HEALPix
-% system \citep{2005ApJ...622..759G}. Several support libraries
-% supporting the most important set of primitives are already available.
-% These libraries are required if one wants to generate SMOCs, and also
-% wants to compare them with sky coordinates. Though please
-% note that these libraries do not have built-in support to performing
-% basic SMOC arithmetics.
-
-
-%\subsection{Time MOC \remove{or TMOC}}
-%\remove{As introduced above, }TMOC {\bf must} be based on JD system, the time
-%scale TCB (see section~\ref{sec:tcb}) and the Solar System Barycenter as the reference
-%position \citep[see also][]{2019ASPC..523..497F} and section~\ref{sec:tmoc1}.
-%The best resolution supported by TMOC is $1 \mu$s.
-%
-%\removeb{In the case that the time scale and the time reference position are unknown,
-%we recommend to set the time resolution of the generated TMOC to order
-%31, e.g. about 1000 seconds (see Table~\ref{table:tmocorders}) corresponding
-%to about twice the light travel time correction between the Earth and
-%the Solar Barycenter. Please refer to the VO note on TIMESYS for more
-%information about this limitation} \citep{timesysnote}.
-%
-%\subsubsection{Numbering}
-%The numbering scheme used in TMOC for specifying the time cell indices
-%{\bf must} reuse a similar hierarchical principle as for the SMOC
-%with the difference that the time line has only one dimension, so the
-%hierarchical progression uses a factor of 2 instead of 4, and there is
-%no need to use a HEALPix mapping.
-%
-%TMOC has 62 orders, and at the best
-%resolution (order 61), a time event will be coded by the integer value
-%representing the number of $\mu$s of this event since JD=0.
-%
-%Two consecutive cells at order N with the indices
-%  (M$\times$2)+1, (M$\times$2) will be coded at order N-1 with the index
-%  M and thus recursively. The order N-1 cell duration is 2 times more 
-%  than the N cell duration (61: 1 $\mu$s, 60: 2 $\mu$s, 59: 4 $\mu$s, etc...).
-
-%\subsection{\add{Frequency MOC}}
-%
-%\add{As introduced in section~\ref{sec:fmoc1}, the quantity manipulated by a FMOC
-%{\bf must} be a frequency, expressed in $Hz$.}
-%
-%\add{FMOCs supports 52 orders, conresponding to the number of explicitly stored
-%mantissa bits in an IEEE 754 double-precision binary floating-point number.}
-%
-%\add{Unlike time, the finest resolution is not constant across the full frequency range.
-%Because frequencies are represented using 64-bit floating-point values,
-%the achievable precision is \textit{relative} rather than \textit{absolute}.
-%At the highest resolution (order 51), the relative precision is approximately $10^{-15}$,
-%which is close to the number of significant decimal digits provided by double-precision
-%floating-point numbers.}
-%
-%\add{Two consecutive cells at order $N$, with indices
-%$(M\times 2)$ and $(M\times 2)+1$, are represented at order $N-1$
-%by a single cell with index $M$. 
-%This hierarchical structure applies recursively across all orders.}
-%
-%\add{Considering the dyadic structure of the intervals, a cell at order 
-%$N-1$ spans twice the frequency range of a cell at order $N$
-%Consequently, the frequency resolution at order 
-%$N-1$ is half that at order $N$.}
-
-
-%\subsection{Serialization}
 A MOC can be manipulated and serialized either as a list of cell
 numbers for each order (hierarchical view), or as a list of intervals
 at the deepest order (range view).
-\add{While} \replace{T}{t}hese two methods are used for
-SMOCs, \replace{TMOC and STMOC serializations and are presented
-below}{only the intervals approach is used for other MOCs}.
-\add{The various possible MOC} serializations are presented below.
+While these two methods are used for
+SMOCs, only the intervals approach is used for other MOCs.
+The various possible MOC serializations are presented below.
 
 \subsubsection{Binary serialization}
 To encode a MOC in a FITS file, each MOC pair (order, index) {\bf
@@ -1053,21 +814,21 @@ than the largest value of the interval. The RANGE values {\bf must}
 be in ascending numerical order. The resulting list is stored in a
 single-column binary table extension. 
 
-\paragraph{\add{Remark on RANGE vs UNIQs packing}}
+\paragraph{Remark on RANGE vs UNIQs packing}
 
-\add{For one-dimensional quantities such as time or frequency, the RANGE representation
+For one-dimensional quantities such as time or frequency, the RANGE representation
 is often\footnote{Except for MOCs that would be dominated by disjoint cells} more compact
 than any UNIQ-based representation.
 In one dimension, contiguous cells can always be merged into a single continuous range, 
-a property that does not generally extend to higher dimensions.}
+a property that does not generally extend to higher dimensions.
 
 \paragraph{Backward compatibility}
-RANGE packaging has been introduced for MOC\replace{2.0}{ 2.0}.
+RANGE packaging has been introduced for MOC 2.0.
 This method is generally faster than the previous one for reading or
 writing a MOC because the internal representation of MOC
 in memory is often range oriented. However, we recommend to
 use the first method for SMOC for compatibility with existing libraries 
-not yet compatible with MOC\replace{2.0}{ 2.0}.
+not yet compatible with MOC 2.0.
 
 \subsubsection{ASCII serialization}
 To encode a MOC as a string each MOC pair (order, index) {\bf must} be written
@@ -1080,15 +841,14 @@ LF) corresponding respectively to the decimal ASCII codes: 32, 13, and
 
 The usage of a range operator is allowed in the list of indices using the
 dash ("-": decimal ASCII code 45) as a separator: lowindex-highindex.
-The list of cells {\bf must} be well-formed\replaceb{,}{.}
-\addb{Both the orders} and \removeb{the} values {\bf must}
-be \addb{sorted} in ascending numerical order\addb{, comparing first the order and
-then the cell value}.
-\addb{This guarantees the same cell orderering as in the UNIQ FITS serialization,
+The list of cells {\bf must} be well-formed.
+Both the orders and values {\bf must} be sorted in ascending numerical order,
+comparing first the order and then the cell value.
+This guarantees the same cell orderering as in the UNIQ FITS serialization,
 enabling easy conversions in streaming mode.
 Although these rules are intentionally strict, implementations are
 encouraged to follow the robustness principle:
-be conservative in what they generate and liberal in what they accept.}
+be conservative in what they generate and liberal in what they accept.
 
 
 If the best resolution of the MOC (moc order) is greater than the
@@ -1098,7 +858,7 @@ In the following example all the
 cells underneath the explicit pair (order, cell) are implicitly covered
 up to order 8, the moc order, annotated followed by the terminator "/".
 Without the terminator we would only have the information of the explicit
-pair (order, cell), and the assumed best resolution would be at order 2.   
+pair (order, cell), and the assumed best resolution would be at order 2.
 
 
 \paragraph{Example of an ASCII MOC:}
@@ -1138,39 +898,30 @@ MOC ASCII encoding
 Note that we use Extended BNF supporting regular expression
 syntax with the following rules: i) postfix * means "repeated
 0 or more times”; ii) postfix + means "repeated 1 or more
-times”; iii) postfix ? means "0 or 1 times". The first \replace{three}{six}
+times”; iii) postfix ? means "0 or 1 times". The first six
 rules depend on the MOC type, i.e. SMOC for space, TMOC for
-time, \add{FMOC for Frequency} \replace{and}{,} STMOC for space-time
-\add{,SFMOC for space-frequency and FTMOC for frequency-time}. 
+time, FMOC for Frequency, STMOC for space-time ,SFMOC for
+space-frequency and FTMOC for frequency-time.
 
 
-\subsection{\replace{STMOC encoding}{MOC serialization for quantity pairs}}
+\subsection{MOC serialization for quantity pairs}
 \label{sec:2dmoce}
 
-
-%\removeb{\add{In this section, we first describe the encoding of STMOC.
-%The same principles apply to the other possible combinations of quantities.}}
-
-%\subsection{STMOC encoding}
-
-Coding \replaceb{STMOC}{a 2D-MOC} consists in the following: 
-for each \replaceb{element ofa temporal coverage}{sub-MOC of the first quantity}
-we list the associated \replaceb{spatial coverage}{MOC of the second quantity}
-using the natural packaging as defined in the previous section. 
+Coding a 2D-MOC consists in the following:
+for each sub-MOC of the first quantity we list the associated MOC of the
+second quantity using the natural packaging as defined in the previous section.
 
 \subsubsection{Binary Serialization}
 The binary serialization of a STMOC is a FITS binary table following
 the RANGE packaging presented previously, which interleaves time range(s)
 and their corresponding space coverage ranges. Following the binary
 RANGE serialization method described below, each range (time or space)
-is coded as two 64-bit signed integers ([min..max[). To distinguish 
-\replaceb{time}{the first quantity (time)} 
-and \replaceb{space}{the second quantity (space)} indices,
-the \replaceb{time}{first quantity} indices {\bf must} have the 64th bits forced
+is coded as two 64-bit signed integers ([min..max[). To distinguish
+the first quantity (time) and he second quantity (space) indices,
+the first quantity indices {\bf must} have the 64th bits forced
 to 1. It is not a sign inversion (two's complement) but a mask affecting
-only that \replaceb{last}{most significant} bit
-without \replaceb{touching}{affecting} any other bits.
-The order of dimensions is always \replaceb{time}{the first quantity (time)} first.
+only that most significant bit without affecting any other bits.
+The order of dimensions is always the first quantity (time) first.
 
 \paragraph{Illustration of STMOC interleaving method}
 
@@ -1199,30 +950,12 @@ STMOC encoding must conform to the following simple rules:
 \end{itemize}
 This is illustrated in Figure~\ref{fig:stmocbin-encoding}.
 
-%\subsection{\add{SFMOC and FTMOC encoding}}
-%\label{sec:sfmoc}
-
-%\add{The SFMOC and FTMOC serializations are the same as the STMOC serialization},
-%\removeb{using the prefix 'f' for the Frequency quantity.}
-%\addb{except that:
-%\begin{itemize}
-%  \item the first quantity of a SFMOC is the Frequency;
-%  \item the second quantity of a FTMOC is the Frequancy;
-%  \item the prefix 'f' is used for Frequency in the ASCII serialization. 
-%\end{itemize}
-%}
-
 \subsubsection{ASCII Serialization}
-The ASCII serialization of a \replaceb{ST}{2D-}MOC is a string
+The ASCII serialization of a 2D-MOC is a string
 following the ASCII MOC serialization presented below, which interleaves
-\replaceb{time coverage}{first quantity sub-MOCs} \removeb{as a
-excerpt of TMOC} and associated
-\replaceb{space coverage as a SMOC}{second quantity MOCs}.
-\removeb{Each TMOC
-element {\bf must} be prefixed by the character 't', and each SMOC
-element {\bf must} be prefixed by the character 's'.}
-\addb{Each sub-MOC and MOC {\bf must} be prefixed by the appropriate character:
-'t' for time, 's' for space and 'f' for frequency}.
+first quantity sub-MOCs and associated second quantity MOCs.
+Each sub-MOC and MOC {\bf must} be prefixed by the appropriate character:
+'t' for time, 's' for space and 'f' for frequency.
 The character is thus omitted until the next dimension element is
 defined.
 
@@ -1245,17 +978,17 @@ STMOC ASCII encoding: two independent numbering. Values in parenthesis are impli
 
 
 \section{FITS keywords}
-\label{sec:fits-key-moc} 
+\label{sec:fits-key-moc}
 For the binary representations which are packaged in binary FITS table,
 we define a set of FITS keywords, their possible values and set when
 those fields are required, optional or recommended in
 Table~\ref{table:fits_stmoc} and show an example of FITS headers for a MOC.
 Since MOC~1.1 \citep{2019ivoa.spec.1007F} the {\tt PIXTYPE = "HEALPIX"}
-keyword/value is no longer required, and should be omitted. 
+keyword/value is no longer required, and should be omitted.
 The keyword {\tt MOCORDER} is no longer required either, but it can be used for
 backwards compatibility if required.
-Other FITS Keywords could be used to augment the information like DATES and ORIGIN. 
- 
+Other FITS Keywords could be used to augment the information like DATES and ORIGIN.
+
 \input{table3.tex}
  
 \clearpage 
@@ -1296,9 +1029,9 @@ END
 
 \section{MOC usage constraints}
 
-\subsection{\add{Reference frames}}
+\subsection{Reference frames}
 
-\subsubsection{\add{SMOC and ICRS}}
+\subsubsection{SMOC and ICRS}
 
 HEALPix supports three coordinate systems: galactic, equatorial, and ecliptic.
 Supporting multiple coordinate systems in SMOCs would prevent from performing
@@ -1306,7 +1039,7 @@ efficient comparison operations.
 Indeed, a HEALPix cell defined in one coordinate system cannot be represented
 exactly in another coordinate system.
 For this reason, the SMOC specification adopts a single reference frame
-\add{for celestial coverages}: 
+for celestial coverages: 
 equatorial coordinates in the ICRS system.
 This choice reflects common astronomical practice, as the majority of
 astronomical catalogs are provided in equatorial coordinates.
@@ -1316,7 +1049,7 @@ such as planetary coverages. The definition of the unique reference for each
 body will have to be defined.
 
 
-\subsubsection{\add{TMOC and TCB} \label{sec:tcb}}
+\subsubsection{TMOC and TCB \label{sec:tcb}}
 
 The time is a relative observation, and depends on the position of the
 observer. There are many time scales for measuring time:
@@ -1327,7 +1060,7 @@ reference (see \cite{2015A&A...574A..36R} for details). Our
 choice is motivated by the fact that this system is linear by
 construction and has been adopted by numerous missions such as Gaia.
 
-\subsubsection{\addb{TMOC of unknown time scale and reference}}
+\subsubsection{TMOC of unknown time scale and reference}
 
 In the case that the time scale and the time reference position are unknown,
 we recommend to set the time resolution of the generated TMOC to order
@@ -1342,12 +1075,12 @@ information about this limitation \citep{timesysnote}.
 The speed of MOC operations - creation, union, intersection, etc
 is directly dependent on the speed of the equality test. It is
 therefore essential to always express a MOC in a canonical way, ie
-one unique representation for one coverage \add{, for both the possible UNIQ (SMOC) and RANGE alternatives}.
+one unique representation for one coverage, for both the possible UNIQ (SMOC) and RANGE alternatives.
 Thus in the case of a hierarchical representation a MOC \textbf{must} be "well-formed", i.e. 
 redundant cells are not allowed, the cells must be ascending sorted
 and the hierarchical encoding principle must be respected. Thus it
 is not allowed to encode sibling cells instead of their parent (4
-siblings for SMOC, 2 siblings for TMOC \add{and FMOC}). In the case of range
+siblings for SMOC, 2 siblings for TMOC and FMOC). In the case of range
 representation, the list of ranges must be expressed without
 overlapping and sorted ascending.
 
@@ -1356,11 +1089,11 @@ overlapping and sorted ascending.
 In order to easily handle MOCs, it is recommended to adjust
 the maximum resolution, i.e. the deepest order, to obtain a representation of
 the desired data volume even if it means degrading the accuracy of the coverage
-(see Appendix~\ref{app:perf}). In the case of STMOC \add{(or SFMOC)}, it is possible to adjust
-the spatial order and/or on the temporal \add{(or frequency)} order independently.
+(see Appendix~\ref{app:perf}). In the case of STMOC (or SFMOC), it is possible to adjust
+the spatial order and/or on the temporal (or frequency) order independently.
 
 \subsection{Working resolution}
-The MOC has been \replaceb{designed}{designated} to be able to efficiently handle observation
+The MOC has been designated to be able to efficiently handle observation
 coverages (images, catalogs, ...). During the construction of the
 MOC, we must then ensure that at the chosen nominal resolution, any cell
 of the MOC contains at least one observation (no empty cell). To keep
@@ -1381,10 +1114,7 @@ properties (commutativity, associativity,...).
 \label{fig:operation}
 \end{figure}
 
-%However, MOC can also be used to manipulate surfaces, unrelated to
-%observations. When used this way, nothing prevents working at the best
-%resolution and some operations such as oversampling, dilation,
-%erosion may be applied.
+
 Note that MOC usage can be diverted to also manipulate surfaces unrelated
 to observations. When it is used this way such operations (oversampling,
 surface dilatation or surface erosion) can be applied. 
@@ -1393,36 +1123,33 @@ resolution of the involved MOCs for preserving the properties of the
 surfaces operations (commutativity, associativity, ...).
 
 
-
-
 \section{Summary and conclusion}
-We have reviewed the standards for encoding the different MOC flavors\replaceb{,}{:} 
-\addb{in addition to} the space MOC \replaceb{(already described in version 1.1 of this document),
-SMOC, the time MOC, TMOC and the space-time MOC, STMOC}{(SMOC), time MOC (TMOC)
+We have reviewed the standards for encoding the different MOC flavors: 
+in addition to the space MOC (SMOC), time MOC (TMOC)
 and the Space-Time MOC (STMOC), which were already described in version 2.0 of this document,
 we introduced the Frequency MOC (FMOC), the Space-Frequency MOC (SFMOC) and the
-Frequency-Time MOC (FTMOC)}. 
+Frequency-Time MOC (FTMOC). 
 The conventions for space and time MOC are the following:
 \begin{itemize}
-\item The SMOC is simply defined \addb{either} as a list of HEALPix indices (order, index) 
-      \addb{or as a sorted list of non-overlapping indices ranges}.
+\item The SMOC is simply defined either as a list of HEALPix indices (order, index) 
+      or as a sorted list of non-overlapping indices ranges.
 \item According to HEALPix, the sphere is divided in cells,
   hierarchically grouped 4 by 4 with 30 orders and the space coverage
   for the deepest order is approximatively 0.4mas.
 \item The space reference system is ICRS. 
-\item The TMOC is \removeb{simply} a list of \addb{sorted and non-overlapping ranges of} time \removeb{interval} indices \replaceb{(order, index)}{at the deepest order}.
+\item The TMOC is a list of sorted and non-overlapping ranges of time indices at the deepest order.
 \item The time scale is divided in intervals hierarchically grouped 2 by
   2 with 62 orders and the time coverage for the deepest order is 1 $\mu$s. 
 \item The time values are defined using JD = 0 as the origin, in Barycentric system. 
-\item \addb{The FMOC is also a list of sorted and non-overlapping ranges of frequency indices at the deepest order}
-\item \addb{The conversion from Frequency, in Hz, to deepest order frequency index is provided by Eq. \ref{eq:fmoc:i}}
-\item \addb{Similarly to time, frequency index intervals are grouped 2 by 2 with a total of 52 orders.}
+\item The FMOC is also a list of sorted and non-overlapping ranges of frequency indices at the deepest order
+\item The conversion from Frequency, in Hz, to deepest order frequency index is provided by Eq. \ref{eq:fmoc:i}
+\item Similarly to time, frequency index intervals are grouped 2 by 2 with a total of 52 orders.
 \end{itemize}
 
 Once defined and encoded for a given astronomical collection, one
-can easily combine the MOCs for \addb{two of} these \replaceb{two dimensions}{three quantities}
-to create a merged \replaceb{STMOC}{2D-MOC} which can be used to navigate and access the collection
-through their coverage for both \replaceb{time and space}{its quantities} simultaneously.
+can easily combine the MOCs for two of these three quantities
+to create a merged 2D-MOC which can be used to navigate and access the collection
+through their coverage for both its quantities simultaneously.
 The possibilities are then very interesting and will be a very
 valuable astronomical tool.
 
@@ -1432,15 +1159,15 @@ valuable astronomical tool.
 \appendix
 \section{Version History}
 
-\subsection{\add{Changes between versions 2.0 and 2.1}}
+\subsection{Changes between versions 2.0 and 2.1}
 
-\add{The differences between version 2.1 of MOC and the preceding version 2.0 are:
+The differences between version 2.1 of MOC and the preceding version 2.0 are:
 \begin{itemize}
   \item Introduction of the frequency dimension to define FMOCs, SFMOCs and FTMOCs;
   \item Introduction of the SUNIQ and ZUNIQ numbering in appendix.
 \end{itemize}
 Adding a new quantity (frequency) as an extension to the existing standard, 
-without modifying existing MOCs, led us to choose a minor version for the document.}
+without modifying existing MOCs, led us to choose a minor version for the document.
 
 
 \subsection{Changes between versions 1.1 and 2.0}

@@ -1,13 +1,13 @@
-\section{\add{Previous frequency indexing convention}\label{sec:apx:fmoc1}}
+\section{Previous frequency indexing convention\label{sec:apx:fmoc1}}
 
-\add{This section describes the frequency axis indexing scheme that was initially explored before
+This section describes the frequency axis indexing scheme that was initially explored before
 the current standardized version. Documenting it here serves two purposes:
 \begin{itemize}
     \item to document earlier versions of FMOC and SFMOC files that may still exist;
     \item to record an already explored solution and thus avoid attempting to reintroduce it in the future.
-\end{itemize}}
+\end{itemize}
 
-\add{The original idea was to (almost) directly use, as the index at the deepest level,
+The original idea was to (almost) directly use, as the index at the deepest level,
 the integer representation of the 64-bit floating-point value of a frequency expressed in Hz.
 Performing MOC operations (except \textit{degrade}) on floating-point ranges is equivalent to
 performing them on the corresponding integer representation ranges because:
@@ -15,9 +15,9 @@ performing them on the corresponding integer representation ranges because:
   \item frequencies are strictly positive values;
   \item for positive floating-point numbers, the numerical ordering is identical to the ordering of their
         integer bit representations.
-\end{itemize}}
+\end{itemize}
 
-\add{The only difference was that the exponent range of a 64-bit floating-point value was considered too
+The only difference was that the exponent range of a 64-bit floating-point value was considered too
 large for the intended use. Therefore, it was restricted to raw exponent values
 $\in [929, 1184]$ instead of the full IEEE~754 range $\in [0, 2047]$.
 The selected interval contains 255 distinct values and therefore requires 8 bits
@@ -27,7 +27,7 @@ orders, with a maximum order of 59. This also defines the, somewhat arbitrary, v
 $f \in [5.0487097934144756 \times 10^{-29},\; 5.846006549323611 \times 10^{48}[$.
 The following pseudo-code describes the transformation, which replaces the
 11-bit exponent $\in [929,1184]$ of a floating-point value with an 8-bit exponent
-$\in [0,255]$.}
+$\in [0,255]$.
 \lstdefinelanguage{Pseudocode}{
   keywords={input, output, return, datatype, function, in, if, else, foreach, while, begin, end
   },
@@ -77,21 +77,20 @@ begin
 end
 \end{lstlisting}
 
-
-\add{One advantage of this approach was the existence of a perfect bijection between the
+One advantage of this approach was the existence of a perfect bijection between the
 64-bit floating-point representation of a frequency (in Hz) within the valid range and
 its index at the deepest resolution. The conversions were also extremely fast, requiring
 only a few bitwise operations. In addition, the number of orders (60) was not limited to
-the number of mantissa bits.}
+the number of mantissa bits.
 
-\add{However, a major issue arose from the representation of the axis using WCS, as used in HiPS 2.0.
+However, a major issue arose from the representation of the axis using WCS, as used in HiPS 2.0.
 Because the representation allocates 8 bits to the exponent and 52 bits to the mantissa,
 the resulting WCS cannot be expressed purely as either linear or logarithmic.
 For orders 0 to 7, the WCS behaves logarithmically.
 For orders 8 to 59, inside a cell or order at least 7, it behaves linearly.
 For ranges spanning order 7, however, the WCS becomes a mixture of logarithmic and linear
 components, which cannot be represented easily.
-This limitation was the primary motivation for abandoning this approach.}
+This limitation was the primary motivation for abandoning this approach.
 
 
 
