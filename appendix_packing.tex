@@ -1,0 +1,65 @@
+\section{\add{SUNIQ and ZUNIQ packaging}}
+
+\add{Although they are not used in this standard, the SUNIQ and ZUNIQ packing schemes 
+are implemented in some MOC libraries and are therefore briefly described here.
+They are valid with all quantities.}
+
+\subsection{\add{SUNIQ packaging}}
+
+\add{SUNIQ provides a generalized alternative to the UNIQ packing, which is specific to HEALPix indices.
+Its main drawback is that it requires one additional bit.
+SUNIQ relies on a sentinel bit (hence the “S” in SUNIQ).
+Given a cell index $index$, the SUNIQ value is obtained by setting a sentinel bit immediately to the 
+left of the most significant bit (MSB) of the index.
+ The resulting expressions for HEALPix and TMOC/FMOC indices are:
+\begin{eqnarray*}
+  suniq_{hpx} & = & 4^{order + 2} + index \\
+  suniq_{t/f} & = & 2^{order + 1} + index
+\end{eqnarray*}
+}
+
+\add{The inverse operation uses the {\textit leading\_zeros} function, 
+which returns the number of leading zeros in the binary representation of a 64-bit (unsigned) integer.
+\begin{eqnarray*}
+  order_{hpx} & = & \frac{59 - leading\_zeros(suniq)}{2} \\
+  index_{hpx} & = & suniq - 4^{order + 2} \\
+  order_{t/f} & = & 62 - leading\_zeros(suniq) \\
+  index_{t/f} & = & suniq - 2^{order + 1}
+\end{eqnarray*}}
+
+\add{Sorting UNIQ or SUNIQ values produces the same ordering of cells: cells of lower order appear first, and within a given order, cells are ordered by increasing index.}
+
+
+\subsection{\add{ZUNIQ packaging}}
+
+\add{ZUNIQ encodes both the cell index and its order in a single integer while preserving the 
+ordering of cells according to their ranges at the maximum resolution.
+HEALPix indices correspond to the concatenation of 12 Z-order curves and therefore follow the 
+natural ordering of a multi-resoltuion Morton (Z-order) curve, which motivates the name ZUNIQ.
+ZUNIQ is constructed from the starting index of the cell at the maximum resolution, left-shifted by one bit, 
+with the bit at the right of the least significant bit used as a sentinel.
+This scheme is similar to the numbering used by
+\textit{S2CellId} in the Google \textit{S2Geometry} library.
+\begin{eqnarray*}
+  zuniq_{hpx} & = & 2 \times index_{29} + 4^{29-order}\\
+  zuniq_{t}   & = & 2 \times index_{62} + 2^{62-order}\\
+  zuniq_{f}   & = & 2 \times index_{52} + 2^{52-order}
+\end{eqnarray*}
+More generally:
+\begin{eqnarray*}
+  zuniq_{hpx} & = & 2 \times index_{order_{max}} + 4^{order_{max}-order} \\
+  zuniq_{t/f} & = & 2 \times index_{order_{max}} + 2^{order_{max}-order}
+\end{eqnarray*}
+}
+
+\add{The inverse transformation uses the {\textit trailing\_zeros} function, 
+which returns the number of trailing zeros in the binary representation of a 64-bit unsigned integer:
+\begin{eqnarray*}
+  order_{hpx} & = & 29 - \frac{trailing\_zeros(zuniq)}{2} \\
+  index_{hpx} & = & \frac{zuniq - 4^{order_{max}-order}}{2} \\
+  order_{t/f} & = & order_{max} - trailing\_zeros(zuniq) \\
+  index_{t/f} & = & \frac{zuniq - 2^{order_{max}-order}}{2}
+\end{eqnarray*}
+Sorting cells according to their ZUNIQ values enables efficient transformations between lists of cells
+at mixed resolutions and lists of ranges.
+More generally, such orderings allow efficient streamed operations.}

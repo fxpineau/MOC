@@ -1,0 +1,17 @@
+\section{\add{User define quantity MOC conventions}\label{sec:udmoc1}}
+
+\add{The conventions adopted for FMOCs are generic and could be applied to any quantity 
+$q$ numerically represented as a 64-bit floating-point value.
+A user wishing to define a custom QMOC (where $Q$ stands for Quantity) would only need to specify:
+\begin{itemize}
+  \item the validity range of the quantity: $[q_{min}, q_{max}[$;
+  \item the mapping function: $g_q: [q_{min}, q_{max}[ \rightarrow [0,1[$.
+\end{itemize}}
+
+\add{However, one of the advantages of MOCs is the use of standardized quantities expressed
+in well-defined units and reference systems.
+In order to perform efficient and meaningful set operations between two MOCs, both MOCs must
+be defined using the same quantity, expressed in the same units, and using 
+the same validity interval and mapping function.}
+
+\add{Poorly constrained or insufficiently documented user-defined quantities may therefore compromise the interoperability of MOCs.}

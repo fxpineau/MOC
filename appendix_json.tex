@@ -11,6 +11,9 @@ As for the ASCII MOC serialization, if the best resolution
 of the MOC (MOCORDER) is greater than the greatest stored order, the
 MOCORDER should be provided with an empty index list.
 
+\addb{Although we expect index arrays to be sorted, we cannot impose
+the same constraint on orders, since JSON object members are considered unordered.}
+
 \paragraph{Example of a JSON SMOC or TMOC:}
 \par\noindent
 \begin{lstlisting}[]

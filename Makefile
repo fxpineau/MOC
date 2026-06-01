@@ -4,19 +4,20 @@
 DOCNAME = moc
 
 # count up; you probably do not want to bother with versions <1.0
-DOCVERSION = 2.0
+DOCVERSION = 2.1
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2022-07-27
+DOCDATE = 2026-06-01
 
 # What is it you're writing: NOTE, WD, PR, or REC
-DOCTYPE = REC
+DOCTYPE = WD
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
 
-SOURCES = $(DOCNAME).tex role_diagram.pdf appendix_algo.tex appendix_json.tex \
-	appendix_perf.tex table1.tex table2.tex table3.tex
+SOURCES = $(DOCNAME).tex role_diagram.pdf \
+	appendix_algo.tex appendix_json.tex appendix_perf.tex appendix_fmoc1.tex appendix_custom.tex \
+	table1.tex table2.tex table3.tex tablef.tex
 
 # List of pixel image files to be included in submitted package 
 FIGURES = healpix.jpg kilo.png kilo1.png kilo2.png kilo3.png kilo4.png role_diagram.svg \
