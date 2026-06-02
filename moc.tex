@@ -790,14 +790,18 @@ in a 32-bit signed integer (TFORM1='J') , and for the higher
 orders in a 64-bit signed integer (TFORM1='K').
 
 \paragraph{RANGE packaging}
-For the coding of RANGE alternative packaging, all the indices are
-expressed at the maximum resolution, and it is the succession
-of intervals that will be stored in the FITS table as 
-two 64-bit signed integers (TFORM1='K') :
-the smallest index of the interval and the index strictly greater
-than the largest value of the interval. The RANGE values {\bf must}
-be in ascending numerical order. The resulting list is stored in a
-single-column binary table extension. 
+For the coding of the RANGE alternative packaging, all indices {\bf shall}
+be expressed at the maximum resolution.
+The sequence of intervals {\bf shall} be stored in the FITS table as pairs
+of signed integers.
+For orders strictly less than 14, 32-bit signed integers (TFORM1='J')
+{\bf may} be used. In this case, the maximum resolution {\bf shall} be 13.
+Otherwise, 64-bit signed integers (TFORM1='K') {\bf must} be used,
+with a maximum resolution of 29.
+The two integers {\bf must} represent the smallest index value of the interval
+(inclusive) and largest value of the interval (exclusive), respectively.
+The RANGE values {\bf must} be stored in ascending numerical order.
+The resulting list {\bf shall} be stored in a single-column binary table extension. 
 
 \paragraph{Remark on RANGE vs UNIQs packing}
 
