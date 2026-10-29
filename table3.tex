@@ -1,7 +1,7 @@
 \begin{table}[!htbp]
 \smallskip
 \begin{center}
-   {\small
+   {\footnotesize
    \begin{tabular} {|l | p{6cm}| c| c|}
    \hline
    {\bf Keyword} & {\bf Definition} & {\bf MOC1.1} & {\bf MOC2.0} \\
@@ -19,10 +19,11 @@
    MOCORD\_F  & Best resolution of the frequency dimension, expressed as the order. & NA & [mandatory] \\
    MOCORDER & Best resolution of the space dimension, expressed as the order. & mandatory & NA \\
    PIXTYPE & 'HEALPIX'  & mandatory & NA \\
+   RANGEORD & ORDER of the stored ranges. The permitted values are defined by the standard and depend on both MOCDIM and TFORM. & NA & [mandatory] \\
    \hline
    \end{tabular}
    }
 \end{center}
-\caption[FITS Keywords for MOC]{FITS Keywords for MOC. Symbol '[]' means mandatory if the MOC contains the keyword related quantity.}
+\caption[FITS Keywords for MOC]{FITS Keywords for MOC. Symbol '[]' means mandatory if the MOC contains the keyword related quantity, or if ORDERING=RANGE for RANGEORD.}
 \label{table:fits_stmoc}
 \end{table}

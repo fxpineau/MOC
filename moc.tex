@@ -799,6 +799,11 @@ For orders strictly less than 14 (SMOC), 30 (TMOC) or 28 (FMOC),
 32-bit signed integers (TFORM1='J') {\bf may} be used.
 In such a case, all indices {\bf shall} be expressed at order 13 (SMOC), 29 (TMOC) or 27 (FMOC).
 Otherwise, 64-bit signed integers (TFORM1='K') {\bf must} be used.
+The FITS keyword /RANGEORD {\bf must} contain the order in which the ranges are expressed.
+The value of the order is defined by the combination of the quantity and TFORM values,
+as listed above.
+Although the RANGEORD keyword is mandatory, reading tools {\bf should} accept
+files in which this keyword is missing and to issue a warning.
 The two integers {\bf must} represent the smallest index value of the interval
 (inclusive) and largest value of the interval (exclusive), respectively.
 The RANGE values {\bf must} be stored in ascending numerical order.
@@ -819,6 +824,7 @@ writing a MOC because the internal representation of MOC
 in memory is often range oriented. However, we recommend to
 use the first method for SMOC for compatibility with existing libraries 
 not yet compatible with MOC 2.0.
+
 
 \subsubsection{ASCII serialization}
 To encode a MOC as a string each MOC pair (order, index) {\bf must} be written
@@ -887,8 +893,8 @@ MOC ASCII encoding
 \end{lstlisting}
 Note that we use Extended BNF supporting regular expression
 syntax with the following rules: i) postfix * means "repeated
-0 or more times”; ii) postfix + means "repeated 1 or more
-times”; iii) postfix ? means "0 or 1 times". The first six
+0 or more times"; ii) postfix + means "repeated 1 or more
+times"; iii) postfix ? means "0 or 1 times". The first six
 rules depend on the MOC type, i.e. SMOC for space, TMOC for
 time, FMOC for Frequency, STMOC for space-time ,SFMOC for
 space-frequency and FTMOC for frequency-time.
@@ -928,7 +934,7 @@ The order of dimensions is always the first quantity (time) first.
 This list of ranges will be  coded in a list of 64bits integers
 (time indices with the 64th bit forced to 1) as:
 \begin{lstlisting}[]
-   tmin1 tmax1 smin1 smax1 tmin2 tmax2 tmin3 tmax3 smin2 smax2 smin3 smax3
+tmin1 tmax1 smin1 smax1 tmin2 tmax2 tmin3 tmax3 smin2 smax2 smin3 smax3
 \end{lstlisting}
 
 STMOC encoding must conform to the following simple rules:
@@ -978,6 +984,7 @@ keyword/value is no longer required, and should be omitted.
 The keyword {\tt MOCORDER} is no longer required either, but it can be used for
 backwards compatibility if required.
 Other FITS Keywords could be used to augment the information like DATES and ORIGIN.
+
 
 \input{table3.tex}
  
@@ -1034,9 +1041,11 @@ equatorial coordinates in the ICRS system.
 This choice reflects common astronomical practice, as the majority of
 astronomical catalogs are provided in equatorial coordinates.
 
-However, it is possible to use SMOC for other coverages, 
-such as planetary coverages. The definition of the unique reference for each
-body will have to be defined.
+However, some astronomical data, such as planetary data, do not pertain to the sky.
+Others, such as some legacy HiPS, were created using Galactic coordinates.
+The use of \emph{COORDSYS} other than \emph{C} could be considered for these specific cases.
+However, this is outside the scope of the current standard, and support for such values
+is not required in current implementations.
 
 
 \subsubsection{TMOC and TCB \label{sec:tcb}}
@@ -1154,6 +1163,7 @@ valuable astronomical tool.
 The differences between version 2.1 of MOC and the preceding version 2.0 are:
 \begin{itemize}
   \item Introduction of the frequency dimension to define FMOCs, SFMOCs and FTMOCs;
+  \item Introduction of the 32-bit version of the RANGE packaging serialization, with the RANGEORD keyword;
   \item Introduction of the SUNIQ and ZUNIQ numbering in appendix.
 \end{itemize}
 Adding a new quantity (frequency) as an extension to the existing standard, 
