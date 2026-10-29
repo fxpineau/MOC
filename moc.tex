@@ -511,11 +511,11 @@ $t \in [0, 2^{62}[$. For a given $order$, its cell $index$ is:
 %  = 2^{order_max - order} (useful with a different datatype in which order max is different)
 Conversly, the range of time values $[t_{min}, t_{max}[$, in $\mu$s since JD=0,
 of a given $index$ of order $order$ is given by
-\begin{align}
-  t_{min} &= index \times 2^{61-order} \\
-  t_{max} &= (index + 1) \times 2^{61-order}
+\begin{eqnarray*}
+  t_{min} &= &index \times 2^{61-order} \\
+  t_{max} &=& (index + 1) \times 2^{61-order}
   \label{eq:tmoc:t}
-\end{align}.
+\end{eqnarray*}.
 
 We note that two consecutive cells at order N with the indices
 (M$\times$2)+1, (M$\times$2) will be coded at order N-1 with the index
@@ -613,12 +613,12 @@ For this reason, the maximum order is limited to 52 levels, ranging from 0 to
 $order_{max} = 51$.
 At the maximum resolution, the index corresponding to a frequency $f$ is
 therefore computed as:
-\begin{align}
-  order_{max} &= 51 \\
-  index_{51}  &= \left\lfloor
+\begin{eqnarray*}
+  order_{max} &=& 51 \\
+  index_{51}  &=& \left\lfloor
   \frac{\log_{10}(f) + 18}{56} \times 2^{52}
   \right\rfloor
-\end{align}
+\end{eqnarray*}
 
 Conversely, the frequency range $[f_{min}, f_{max}[$ corresponding to a given
 index $index$ at a given order $order$ can be obtained using the inverse
